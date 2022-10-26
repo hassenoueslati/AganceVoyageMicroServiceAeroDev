@@ -1,0 +1,4 @@
+FROM openjdk:8 
+EXPOSE 8096
+ADD target/voituree-0.0.1-SNAPSHOT-exec.jar voituree-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "voituree-0.0.1-SNAPSHOT.jar"]

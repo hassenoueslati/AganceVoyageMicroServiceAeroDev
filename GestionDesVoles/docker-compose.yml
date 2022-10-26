@@ -1,0 +1,29 @@
+version: "2.7.4"
+services:
+
+  vole:
+    container_name: vole
+    build: C:\Users\HP\Desktop\5 TWIN\GestionDesVoles
+    ports:
+      - "8086:8086"
+    hostname: vole
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+
+  discovery:
+    build: C:\Users\HP\Desktop\5 TWIN\microserviceGestionDesVole\EurekaServer
+    ports:
+      - "8761:8761"
+    image: "discovery-service"
+    
+  apigateway:
+    container_name: apigateway
+    build: C:\Users\HP\Desktop\5 TWIN\microserviceGestionDesVole\apigetway
+    ports:
+      - "8089:8089"
+    hostname: apigateway
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+    image: "apigateway"
+    depends_on:
+      - discovery

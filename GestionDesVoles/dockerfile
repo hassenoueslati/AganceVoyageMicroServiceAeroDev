@@ -1,0 +1,4 @@
+FROM openjdk:8
+EXPOSE 8086
+ADD /target/GestionDesVoles-0.0.1-SNAPSHOT.jar GestionDesVoles.jar
+ENTRYPOINT ["java" , "-jar" , "GestionDesVoles.jar"]

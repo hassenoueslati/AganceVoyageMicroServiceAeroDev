@@ -1,0 +1,67 @@
+version: "2.7.4"
+services:
+
+  reservation:
+    container_name: reservation
+    build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\GestionReservation
+    ports:
+      - "8085:8085"
+    hostname: reservation
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+
+  discovery:
+    build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\EurekaServer
+    ports:
+      - "8761:8761"
+    image: "discovery-service"
+    
+  apigateway:
+    container_name: apigateway
+    build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\apigetway
+    ports:
+      - "8089:8089"
+    hostname: apigateway
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+    image: "apigateway"
+    depends_on:
+      - discovery
+  vole:
+      container_name: vole
+      build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\GestionDesVoles
+      ports:
+        - "8086:8086"
+      hostname: vole
+      environment:
+        - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+  offre:
+      container_name: offre
+      build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\GestionOffre
+      ports:
+        - "8084:8084"
+      hostname: offre
+      environment:
+        - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+  partenaire:
+      container_name: partenaire
+      build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\NodeAPI-Partenaire
+      ports:
+        - "3000:3000"
+      hostname: partenaire
+  voiture:
+      container_name: voiture
+      build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\Projet\Voituree
+      ports:
+        - "8096:8096"
+      hostname: voiture
+      environment:
+        - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka
+        
+  angular-service:
+      container_name: angularcontainer
+      build: C:\Users\Hassen\Desktop\5TWIN\MicroServices\AgenceVoyage
+      volumes :
+        - './angular:/usr/src/app'
+      ports:
+        - "4200:4200"
